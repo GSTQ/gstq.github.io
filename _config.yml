@@ -16,6 +16,8 @@ twitter_username: ''
 # Build settings
 markdown: kramdown
 
+timezone: Asia/Yekaterinburg
+
 permalink: '/:title/'
 
 gems: [jekyll-paginate]
