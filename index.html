@@ -12,16 +12,10 @@ layout: default
       		<a class="post-link" href="{{ post.url | prepend: site.baseurl }}"><h3 class="post-title" itemprop="name headline">{{ post.title }}</h3> </a>
 	</header>
    	{{ post.content }}
-	<p class="post-meta" style="text-align: right; color: rgb(152,152,152);">
-		<time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | localize: "%d %B %Y" }}</time>
-		{% if page.author %} • 
-			<span itemprop="author" itemscope itemtype="http://schema.org/Person">
-				<span itemprop="name">
-					{{ post.author }}
-				</span>
-			</span>
-		{% endif %}
-	</p>
+	<span class="post-meta" style="display: block; text-align: right; color: rgb(152,152,152);">
+		Дата: <time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | localize: "%d %B %Y" }}</time>
+		{% if post.tags.size > 0 %} • Теги: <span id="tag-cloud">{{ post | tags }}</span>{% endif %}
+	</span>
 </div>
 </article>
 
