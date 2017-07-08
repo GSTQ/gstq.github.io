@@ -14,7 +14,7 @@ layout: default
    	{{ post.content }}
 	<span class="post-meta" style="display: block; text-align: right; color: rgb(152,152,152);">
 		Дата: <time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | localize: "%d %B %Y" }}</time>
-		{% if post.tags.size > 0 %} • Теги: <span id="tag-cloud">{{ post | tags }}</span>{% endif %}
+		{% if post.tags.size > 0 %} • Теги: <span id="tag-cloud"></span>{% endif %}
 	</span>
 </div>
 </article>
