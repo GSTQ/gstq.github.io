@@ -30,7 +30,7 @@ layout: page
 		 <li>
 		 <h3>
 		 	<a href="{{ post.url }}">
-		 	{{ post.date | localize: "%d %B %Y" }} - {{ post.title }}
+		 	{% include date-field.html date=post.date %} - {{ post.title }}
 			</a>
 		  </h3>
 		 </li>

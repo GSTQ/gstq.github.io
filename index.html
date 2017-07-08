@@ -13,7 +13,7 @@ layout: default
 	</header>
    	{{ post.content }}
 	<span class="post-meta" style="display: block; text-align: right; color: rgb(152,152,152);">
-		Дата: <time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | localize: "%d %B %Y" }}</time>
+		Дата: {% include date-field.html date=post.date %}
 		{% if post.tags.size > 0 %}
 			{% include tags-list.html tags=post.tags %}
 		{% endif %}
