@@ -24,4 +24,6 @@ permalink: '/:title/'
 gems: [jekyll-paginate]
 
 paginate: 10
+
+excerpt_separator: <!--more-->
                            

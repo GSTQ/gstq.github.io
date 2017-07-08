@@ -11,7 +11,7 @@ layout: default
   	<header class="post-header">
       		<a class="post-link" href="{{ post.url | prepend: site.baseurl }}"><h3 class="post-title" itemprop="name headline">{{ post.title }}</h3> </a>
 	</header>
-   	{{ post.content }}
+   	{{ post.excerpt }}
 	<span class="post-meta" style="display: block; text-align: right; color: rgb(152,152,152);">
 		Дата: {% include date-field.html date=post.date %}
 		{% if post.tags.size > 0 %}
