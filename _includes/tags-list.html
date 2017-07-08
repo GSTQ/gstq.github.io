@@ -1,0 +1,6 @@
+• Теги:
+<span id="tag-cloud">
+{% for tag in include.tags %}
+	<a class="tag" href="/tags/#{{ tag | slugify }}">{{ tag }}</a>
+{% endfor %}
+</span>
