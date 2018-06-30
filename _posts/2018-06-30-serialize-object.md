@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Баг сериализации тела Http запроса
-tags: c# dotnet aspnetcore
+tags: c# .Net aspnetcore
 comments: true
 ---
 
@@ -11,14 +11,14 @@ comments: true
 Казалось бы, будничная ситуация - есть два сервиса. Один, написанный на dotnetcore, создает HttpRequestMessage, кладет в Content объект и шлет его POSTом в контроллер второго сервиса, написанный на dotnet framework, который сериализует тело запроса в объект.
 
 Код первого сервиса:
-{% highlight csharp %}
+```csharp
     var request = new HttpRequestMessage(HttpMethod.POST, uri);
     request.Content = new ObjectContent<MyData>(data, new JsonMediaTypeFormatter());
     var response = await HttpClient.SendAsync(request, cancellationToken);
-{% endhighlight %} 
+```
 
 Код второго сервиса:
-{% highlight csharp %}
+```csharp
     public class MyControllerController : ApiController
     {
         [HttpPost]
@@ -29,7 +29,7 @@ comments: true
             return Ok();
         }
     }
-{% endhighlight %} 
+```
 
 Сравнивая запросы посылаемые сервисом и Postmanом, я обнаружил, что в случае запроса из сервиса в заголовке запроса Content-Length всегда был 0, а из Postman - нужной длины. Дело оказалось в ObjectContent. Он сериализовал объект в Json,
 но почему-то не задавал длину контента для запроса. Кстати, так же я узнал, что нельзя вместо Content-Length указать просто
@@ -37,11 +37,11 @@ comments: true
 
 Ну и как результат нашел способ найти это сделать правильно: 
 
-{% highlight csharp %}
+```csharp
     var request = new HttpRequestMessage(HttpMethod.POST, uri);
     request.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
     var response = await HttpClient.SendAsync(request, cancellationToken);
-{% endhighlight %} 
+```
 
 
 
