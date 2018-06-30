@@ -42,7 +42,7 @@ comments: true
     request.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
     var response = await HttpClient.SendAsync(request, cancellationToken);
 ```
-
+Баг побежден, работаем дальше :) 
 
 
 
