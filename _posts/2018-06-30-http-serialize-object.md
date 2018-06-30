@@ -12,23 +12,23 @@ comments: true
 
 Код первого сервиса:
 ```csharp
-    var request = new HttpRequestMessage(HttpMethod.POST, uri);
-    request.Content = new ObjectContent<MyData>(data, new JsonMediaTypeFormatter());
-    var response = await HttpClient.SendAsync(request, cancellationToken);
+var request = new HttpRequestMessage(HttpMethod.POST, uri);
+request.Content = new ObjectContent<MyData>(data, new JsonMediaTypeFormatter());
+var response = await HttpClient.SendAsync(request, cancellationToken);
 ```
 
 Код второго сервиса:
 ```csharp
-    public class MyControllerController : ApiController
+public class MyControllerController : ApiController
+{
+    [HttpPost]
+    [Route("do_somework")]
+    public async Task<IHttpActionResult> DoSomething([FromBody] MyData data) // вот здесь приходит null
     {
-        [HttpPost]
-        [Route("do_somework")]
-        public async Task<IHttpActionResult> DoSomething([FromBody] MyData data) // вот здесь приходит null
-        {
-            await Somework(data);
-            return Ok();
-        }
+        await Somework(data);
+        return Ok();
     }
+}
 ```
 
 Сравнивая запросы посылаемые сервисом и Postmanом, я обнаружил, что в случае запроса из сервиса в заголовке запроса Content-Length всегда был 0, а из Postman - нужной длины. Дело оказалось в ObjectContent. Он сериализовал объект в Json,
@@ -38,8 +38,8 @@ comments: true
 Ну и как результат нашел способ найти это сделать правильно: 
 
 ```csharp
-    var request = new HttpRequestMessage(HttpMethod.POST, uri);
-    request.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
-    var response = await HttpClient.SendAsync(request, cancellationToken);
+var request = new HttpRequestMessage(HttpMethod.POST, uri);
+request.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+var response = await HttpClient.SendAsync(request, cancellationToken);
 ```
 Баг побежден, работаем дальше :) 

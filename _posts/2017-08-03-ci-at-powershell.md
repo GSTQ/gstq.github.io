@@ -14,7 +14,7 @@ comments: true
 Казалось бы какие могут возникнуть трудности в деплое сервера, который представляет собой один exe-файл? Построй приложение в релиз-конфигурации, скопируй и положи куда нужно конфигурационные файлы, запусти нужный процесс. 
 
 Для запуска сервера необходимо получить свободный открытый порт из диапазона и положить его в конфигурационный файл. Для этого написан простой скрипт на powershell:
-{% highlight powershell %}
+```powershell
 $config = [xml](Get-Content $configPath)
 $allPorts = (40000..49999) 
 $usedPorts = netstat -ant | grep  -oh ":4[0-9][0-9][0-9][0-9]" | cut -c 2-
@@ -29,7 +29,7 @@ foreach ($port in $allPorts) {
 
 $config.serverInstance.instance.port = "$firstFreePort"
 $config.Save($configPath)
-{% endhighlight %} 
+```
 
 Однако с запуском и остановкой сервера возникли проблемы. 
 
@@ -39,29 +39,29 @@ Start-Process $executable -WindowStyle Hidden
 {% endhighlight %} 
 
 Однако, обладая этими же правами, вы не можете найти и убить этот процесс по пути исполняемого файла. Следующая команда ничего не возвращает
-{% highlight powershell %}
+```powershell
 Get-Process | Where-Object {$_.Path-eq $executablePath} | Stop-Process 
-{% endhighlight %} 
+```
 
 И даже зная его PID, нельзя его убить:
-{% highlight powershell %}
+```powershell
 Stop-Process -id $proccessId 
-{% endhighlight %} 
+```
 
 Пародоксальная ситуация, когда служба может запусить процесс, но не может его убить. Мы уже хотели использовать docker для запуска тестовых сервисов, но решение было найдено.
 
 Оказалось что можно найти этот процесс зная его PID:
-{% highlight powershell %}
+```powershell
 $process = Get-Process | Where-Object {$_.Id -eq $processId} 
-{% endhighlight %} 
+```
 
 И если у процесса вызвать Kill() - то он запросто убивается:
-{% highlight powershell %}
+```powershell
 if ($process)
 {
     $process.Kill()
 }
-{% endhighlight %} 
+```
 
 Таким образом, пришлось при запуске сервера сохранять его PID в папку с исполняемым файлом, чтобы при повторной сборке или при очистке можно было получить его, найти нужный процесс и убить его. 
 
