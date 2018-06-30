@@ -1,3 +1,11 @@
+.highlight {
+  padding: 9px 14px;
+  margin-bottom: 14px;
+  background-color: #1e1e1e;
+  border: 1px solid #e1e1e8;
+  border-radius: 4px;
+}
+
 .highlight table td { padding: 5px; }
 .highlight table pre { 
   margin: 0;
