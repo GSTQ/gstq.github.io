@@ -6,6 +6,15 @@
   border-radius: 4px;
 }
 
+.highlight pre {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  white-space: pre-wrap;
+  background-color: #1e1e1e;
+  border: 0;
+}
+
 .highlight table td { padding: 5px; }
 .highlight table pre { 
   margin: 0;
