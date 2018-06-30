@@ -23,6 +23,13 @@ permalink: '/:title/'
 
 highlighter: rouge
 
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    span: false
+
 gems: [jekyll-paginate, rouge]
 
 paginate: 10

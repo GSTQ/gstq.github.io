@@ -11,14 +11,14 @@ comments: true
 Казалось бы, будничная ситуация - есть два сервиса. Один, написанный на dotnetcore, создает HttpRequestMessage, кладет в Content объект и шлет его POSTом в контроллер второго сервиса, написанный на dotnet framework, который сериализует тело запроса в объект.
 
 Код первого сервиса:
-```C#
+```csharp
     var request = new HttpRequestMessage(HttpMethod.POST, uri);
     request.Content = new ObjectContent<MyData>(data, new JsonMediaTypeFormatter());
     var response = await HttpClient.SendAsync(request, cancellationToken);
 ```
 
 Код второго сервиса:
-```C#
+```csharp
     public class MyControllerController : ApiController
     {
         [HttpPost]
@@ -37,7 +37,7 @@ comments: true
 
 Ну и как результат нашел способ найти это сделать правильно: 
 
-```C#
+```csharp
     var request = new HttpRequestMessage(HttpMethod.POST, uri);
     request.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
     var response = await HttpClient.SendAsync(request, cancellationToken);
