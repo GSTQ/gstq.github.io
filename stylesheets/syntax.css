@@ -10,7 +10,7 @@
     margin-top: 0;
     margin-bottom: 0;
     white-space: pre-wrap;
-    background-color: transparent;
+    background-color: #272822;
     border: 0;
   }
   .highlight pre code {
