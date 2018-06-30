@@ -43,8 +43,3 @@ comments: true
     var response = await HttpClient.SendAsync(request, cancellationToken);
 ```
 Баг побежден, работаем дальше :) 
-
-
-
-
-

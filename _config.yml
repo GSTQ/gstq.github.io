@@ -21,9 +21,10 @@ timezone: Asia/Yekaterinburg
 
 permalink: '/:title/'
 
-gems: [jekyll-paginate]
+highlighter: rouge
+
+gems: [jekyll-paginate, rouge]
 
 paginate: 10
 
 excerpt_separator: <!--more-->
-                           
